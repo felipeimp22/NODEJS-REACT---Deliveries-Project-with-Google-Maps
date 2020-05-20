@@ -20,7 +20,7 @@ module.exports = {
 
   async getApiKey(req, res) {
 
-    return res.json({ API_KEY: process.env.API_KEY })
+    return res.json(process.env.API_KEY)
   }
 
 }

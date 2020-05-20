@@ -1,6 +1,5 @@
-import React from 'react';
-
-
+import React, { Component, useState, useEffect } from 'react';
+import axios from 'axios'
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng
@@ -19,6 +18,8 @@ import {
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 
 
+import api from '../../services/api'
+import Axios from 'axios';
 
 // import "@reach/menu-button/styles.css";
 
@@ -48,14 +49,37 @@ const mapContainerStyle = {
   width: "100vw",
   height: "100vh",
 }
+
 const center = {
   lat: -23.550520,
   lng: -46.633308
 }
 
+const apiKey = []
+
 function Index() {
+  const [projects, setProjects] = useState([])
+  // 
+  useEffect(() => {
+
+    //REQ with PromiseAll
+
+    // const fetchData = () => {
+    //   const result = api.get(
+    //     "/"
+    //   )
+    //   Promise.all([result]).then((values) => {
+    //     setProjects([values[0].data])
+    //     console.log(values[0].data);
+    //   });
+    // };
+    // fetchData();
+
+  }, [])
+
+
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "",
+    googleMapsApiKey: "AIzaSyAJwTL_WQK7sIhlccPw7XhSLL_uoqlu_ic",
     libraries,
   })
   /**
