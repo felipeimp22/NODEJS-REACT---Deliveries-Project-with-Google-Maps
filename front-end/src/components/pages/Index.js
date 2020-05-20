@@ -26,35 +26,12 @@ import { Div, Form, Div2 } from './style'
 
 import mapStyles from "../../Styles/mapsStyles"
 
-// import "@reach/menu-button/styles.css";
-
-
-// import { Container } from './styles';
-
-//   function Map() {
-//     return (
-//       <GoogleMap
-//         defaultZoom={10}
-//         defaultCenter={{ lat: -23.550520, lng: -46.633308 }}
-//       />
-//     )
-//   }
-// const WrappedMap = withScriptjs(withGoogleMap(Map))
-
-
-// return <>
-//     <h1>teste</h1>
-//     {/* <div><WrappedMap googleMapURL={``} /></div> */}
-//   </>;
-
-
-
 const libraries = ["places"]
 const mapContainerStyle = {
   // width: "100vw",
   // height: "100vh",
   borderRadius: "10px",
-  boxShadow: "0 0 5px rgba(0, 0, 0, 1)",
+  boxShadow: " 0px 0px 2px 2px rgba(0, 0, 0, 0.5)",
 
 
   width: "60vw",
@@ -73,8 +50,31 @@ const options = {
 }
 
 
+
+
 function Index() {
-  const [projects, setProjects] = useState([])
+  const [markers, setMarkers] = useState([])
+
+
+  // handleMarker = (curr) => {
+  //   setMarkers([...curr, {
+  //     lat: event.latLng.lat(),
+  //     lng: event.latLng.lng()
+
+  //   }])
+  // }
+
+  // handleMarker = (event) => {
+  //   setMarkers(curr => [...curr,
+  //   {
+  //     lat: event.latLng.lat(),
+  //     lng: event.latLng.lng()
+  //   }
+  //   ])
+  //   console.log('boa')
+  // }
+
+
   // 
   useEffect(() => {
 
@@ -129,7 +129,14 @@ function Index() {
           zoom={8} center={center}
           options={options}
           onClick={(event) => {
-            console.log(event)
+            setMarkers(curr => [...curr,
+            {
+              lat: event.latLng.lat(),
+              lng: event.latLng.lng(),
+              time: new Date()
+            }
+            ])
+            console.log("boa", markers)
           }}
         />
       </div>

@@ -7,12 +7,13 @@ export default createGlobalStyle`
   padding:0;
   outline:0;
   /* box-sizing:border-box; */
+
 }
 html, body, #root{
   /* min-height:100%; */
+  
 }
 body{
-
 
   background: white;
   -webkit-font-smoothing: antialiased !important;

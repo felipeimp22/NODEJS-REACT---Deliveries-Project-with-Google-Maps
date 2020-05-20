@@ -7,7 +7,7 @@ export const Div = styled.div`
  height:80vh;
  min-height: 40vh;
 
-background-color: red;
+background-color: rgba(212, 212, 212, 0.5);
 
 display:flex;
 align-items:center;
@@ -32,7 +32,8 @@ margin-left: 18vh;
 export const Div2 = styled.div`
 
 
-background-color: #ccc;
+background-color: rgba(230, 230, 230,0.1);
+
 
 /* display:flex;
 align-items:center;
@@ -47,7 +48,9 @@ box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.5);
 padding: 2px;
 margin: 2px auto;
 
-margin-left:2px;
+margin-left:2vh;
+margin-right:2vh;
+
 margin-top:-20vh;
 
 
@@ -66,11 +69,11 @@ input{
       border-radius:4px;
       font-size: 15px;
       max-height:1.2vw;
-      max-width:39vh;
-      background-color: rgba(255,255,255,0.5);
+      max-width:35vh;
+      background-color: rgba(255,255,255,0.1);
 
 
-      margin-left:1vh;
+      margin-left:2vh;
       margin-right:1vh;
       margin-top:2vh;
 
