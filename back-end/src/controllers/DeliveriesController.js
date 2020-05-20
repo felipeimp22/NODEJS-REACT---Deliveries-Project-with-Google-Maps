@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const Deliveries = mongoose.model('Deliveries')
+require('dotenv').config()
+
 
 module.exports = {
 
@@ -14,7 +16,11 @@ module.exports = {
 
 
     return res.json(deliveries)
-  }
+  },
 
+  async getApiKey(req, res) {
+
+    return res.json({ API_KEY: process.env.API_KEY })
+  }
 
 }
