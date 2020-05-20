@@ -17,9 +17,14 @@ import {
 // import { GoogleMap, withScriptjs, withGoogleMap } from "react-google-maps";
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 
+import Axios from 'axios';
+
 
 import api from '../../services/api'
-import Axios from 'axios';
+
+import { Div, Form, Div2 } from './style'
+
+import mapStyles from "../../Styles/mapsStyles"
 
 // import "@reach/menu-button/styles.css";
 
@@ -46,16 +51,27 @@ import Axios from 'axios';
 
 const libraries = ["places"]
 const mapContainerStyle = {
-  width: "100vw",
-  height: "100vh",
+  // width: "100vw",
+  // height: "100vh",
+  borderRadius: "10px",
+  boxShadow: "0 0 5px rgba(0, 0, 0, 1)",
+
+
+  width: "60vw",
+  height: "80vh",
+
 }
 
 const center = {
   lat: -23.550520,
   lng: -46.633308
 }
+const options = {
+  styles: mapStyles,
+  disableDefaultUI: true,
+  zoomControl: true,
+}
 
-const apiKey = []
 
 function Index() {
   const [projects, setProjects] = useState([])
@@ -79,7 +95,7 @@ function Index() {
 
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAJwTL_WQK7sIhlccPw7XhSLL_uoqlu_ic",
+    googleMapsApiKey: "",
     libraries,
   })
   /**
@@ -89,9 +105,37 @@ function Index() {
   if (!isLoaded) return "Loading Maps";
 
 
-  return <>
-    <GoogleMap mapContainerStyle={mapContainerStyle} zoom={8} center={center} />
-  </>;
+  return (
+    <Div>
+      <Div2>
+
+
+        <input type="text"
+          placeholder="Nome"
+        // value={"newRP"}
+        // onChange={this.handleInputChange}
+        />
+        <input type="text"
+          placeholder="Peso"
+        // value={"newRP"}
+        // onChange={this.handleInputChange}
+        />
+
+      </Div2>
+      <div>
+
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+          zoom={8} center={center}
+          options={options}
+          onClick={(event) => {
+            console.log(event)
+          }}
+        />
+      </div>
+    </Div>
+
+  )
 }
 
 export default Index;
