@@ -4,6 +4,16 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng
 } from "use-places-autocomplete"
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+  ComboboxOptionText,
+} from "@reach/combobox";
+import "@reach/combobox/styles.css";
+
 
 import {
   Menu,
@@ -26,6 +36,7 @@ import { Div, Form, Div2 } from './style'
 import mapStyles from "../../Styles/mapsStyles"
 
 import pontMarker from '../../Styles/icons/interface.svg'
+import { formatRelative } from 'date-fns';
 
 
 
@@ -55,10 +66,45 @@ const options = {
 }
 
 
+function Search() {
+  const { ready, value, suggestions: { status, data }, setValue, clearSuggestions } = usePlacesAutocomplete({
+    requestOptions: {
+      location: {
+        lat: () => -23.550520,
+        lng: () => -46.633308
+      },
+      radius: 500 * 100
+    }
+  })
+  return (
+    <div className="search">
+      <Combobox onSelect={async (address) => {
+        try {
+          const results = await getGeocode({ address })
+          const { lat, lng } = await getLatLng(results[0])
+          console.log("-------->", lat, lng)
+
+        } catch (error) {
+          console.log('ERROR: ', error)
+        }
+        // console.log(adress, data)
+      }}>
+        <ComboboxInput value={value} onChange={(e) => { setValue(e.target.value) }}
+          disabled={!ready} placeholder="Digite o endereço"
+        />
+        <ComboboxPopover>
+          {status === "OK" && data.map(({ id, description, geometry }) => (< ComboboxOption key={id} value={description + geometry} />))}
+        </ComboboxPopover>
+      </Combobox>
+    </div>
+  )
+}
+
 
 
 function Index() {
-  const [markers, setMarkers] = useState([])
+  const [markers, setMarkers] = useState([]);
+  const [selected, setSelected] = useState(null);
 
 
   // handleMarker = (curr) => {
@@ -122,6 +168,7 @@ function Index() {
     <Div>
       <Div2>
 
+        <Search />
 
         <input type="text"
           placeholder="Nome"
@@ -148,11 +195,22 @@ function Index() {
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15)
             }}
+            onClick={() => {
+              setSelected(marker)
+            }}
           />)}
+          {selected ? (
+            <InfoWindow position={{ lat: selected.lat, lng: selected.lng }} onCloseClick={() => { setSelected(null) }}>
+              <div>
+                <h2>Point Spoted</h2>
+                <p>Spoted {formatRelative(selected.time, new Date())}</p>
+              </div>
+            </InfoWindow>) : null}
+
 
         </GoogleMap>
       </div>
-    </Div>
+    </Div >
 
   )
 }

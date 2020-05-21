@@ -60,6 +60,26 @@ margin-top:-20vh;
   flex-direction:column;
 
 
+.search{
+  
+  
+
+
+/* border: 1px solid  rgba(255,255,255,1); */
+/* padding: 10px 15px; */
+/* border-radius:4px; */
+/* font-size: 15px; */
+max-height:5vw;
+min-width:55vh;
+/* background-color: rgba(255,255,255,0.1); */
+
+/* 
+ margin-left:30vh; 
+margin-right:1vh;
+margin-top:2vh;  */
+
+}
+
 input{
   flex-direction:column;
 
