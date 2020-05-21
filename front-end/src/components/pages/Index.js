@@ -107,6 +107,13 @@ function Index() {
   /**
    * Verificantions
    */
+
+  const mapRef = React.useRef();
+  const onMapLoad = React.useCallback((map) => {
+    mapRef.current = map;
+  }, [])
+
+
   if (loadError) return "Error Loading Maps";
   if (!isLoaded) return "Loading Maps";
 
@@ -131,6 +138,7 @@ function Index() {
           zoom={8} center={center}
           options={options}
           onClick={handleMarker}
+          onLoad={onMapLoad}
         >
           {markers.map(marker => <Marker key={marker.time.toISOString()}
             position={{ lat: marker.lat, lng: marker.lng }}
