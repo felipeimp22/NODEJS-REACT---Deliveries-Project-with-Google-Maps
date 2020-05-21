@@ -19,13 +19,17 @@ import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps
 
 import Axios from 'axios';
 
-
 import api from '../../services/api'
 
 import { Div, Form, Div2 } from './style'
+
 import mapStyles from "../../Styles/mapsStyles"
 
-// import markerSVG from "../../Styles/icons/interface.png"
+import pontMarker from '../../Styles/icons/interface.svg'
+
+
+
+
 
 const libraries = ["places"]
 const mapContainerStyle = {
@@ -65,15 +69,16 @@ function Index() {
   //   }])
   // }
 
-  // handleMarker = (event) => {
-  //   setMarkers(curr => [...curr,
-  //   {
-  //     lat: event.latLng.lat(),
-  //     lng: event.latLng.lng()
-  //   }
-  //   ])
-  //   console.log('boa')
-  // }
+  const handleMarker = React.useCallback((event) => {
+    setMarkers(curr => [...curr,
+    {
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng(),
+      time: new Date()
+    }
+    ])
+    console.log("boa", markers)
+  }, [])
 
 
   // 
@@ -125,22 +130,15 @@ function Index() {
           mapContainerStyle={mapContainerStyle}
           zoom={8} center={center}
           options={options}
-          onClick={(event) => {
-            setMarkers(curr => [...curr,
-            {
-              lat: event.latLng.lat(),
-              lng: event.latLng.lng(),
-              time: new Date()
-            }
-            ])
-            console.log("boa", markers)
-          }}
+          onClick={handleMarker}
         >
           {markers.map(marker => <Marker key={marker.time.toISOString()}
             position={{ lat: marker.lat, lng: marker.lng }}
             icon={{
-              url: "/interface.svg"
-
+              url: pontMarker,
+              scaledSize: new window.google.maps.Size(30, 30),
+              origin: new window.google.maps.Point(0, 0),
+              anchor: new window.google.maps.Point(15, 15)
             }}
           />)}
 
