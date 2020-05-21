@@ -23,8 +23,9 @@ import Axios from 'axios';
 import api from '../../services/api'
 
 import { Div, Form, Div2 } from './style'
-
 import mapStyles from "../../Styles/mapsStyles"
+
+// import markerSVG from "../../Styles/icons/interface.png"
 
 const libraries = ["places"]
 const mapContainerStyle = {
@@ -112,13 +113,9 @@ function Index() {
 
         <input type="text"
           placeholder="Nome"
-        // value={"newRP"}
-        // onChange={this.handleInputChange}
         />
         <input type="text"
           placeholder="Peso"
-        // value={"newRP"}
-        // onChange={this.handleInputChange}
         />
 
       </Div2>
@@ -138,7 +135,16 @@ function Index() {
             ])
             console.log("boa", markers)
           }}
-        />
+        >
+          {markers.map(marker => <Marker key={marker.time.toISOString()}
+            position={{ lat: marker.lat, lng: marker.lng }}
+            icon={{
+              url: "/interface.svg"
+
+            }}
+          />)}
+
+        </GoogleMap>
       </div>
     </Div>
 
