@@ -37,38 +37,25 @@ Nesse Sistema, você pode cadastrar a sua entrega e ao mesmo tempo ir fazendo ma
 Para instalar, é necessario ter um dos gerenciadores de pacotes de preferência Yarn ou npm.
 Assim que já tiver algum desses gerenciadores, é necessario entrar na pasta front-end do projeto e
 digitar no terminal yarn ou npm i, assim que terminar repetir a ação na pasta back-end.
-
 ```sh
-make install
-npm test
+yarn 
 ```
 
-## Histórico de lançamentos
+```sh
+npm i
+```
 
-* 0.2.1
-    * MUDANÇA: Atualização de docs (código do módulo permanece inalterado)
-* 0.2.0
-    * MUDANÇA: Remove `setDefaultXYZ()`
-    * ADD: Adiciona `init()`
-* 0.1.1
-    * CONSERTADO: Crash quando chama `baz()` (Obrigado @NomeDoContribuidorGeneroso!)
-* 0.1.0
-    * O primeiro lançamento adequado
-    * MUDANÇA: Renomeia `foo()` para `bar()`
-* 0.0.1
-    * Trabalho em andamento
+
 
 ## Meta
 
-Seu Nome – [@SeuNome](https://twitter.com/...) – SeuEmail@exemplo.com
+[https://github.com/felipeimp22/NODEJS-REACT---Deliveries-Project-with-Google-Maps](https://github.com/felipeimp22)
+[https://www.linkedin.com/in/felipe-imp%C3%A9rio-alves-de-nazareth-823243169/](https://www.linkedin.com/in/felipe-imp%C3%A9rio-alves-de-nazareth-823243169/)
 
-Distribuído sob a licença XYZ. Veja `LICENSE` para mais informações.
-
-[https://github.com/yourname/github-link](https://github.com/othonalberto/)
 
 ## Contributing
 
-1. Faça o _fork_ do projeto (<https://github.com/yourname/yourproject/fork>)
+1. Faça o _fork_ do projeto (<https://github.com/felipeimp22/NODEJS-REACT---Deliveries-Project-with-Google-Maps/fork>)
 2. Crie uma _branch_ para sua modificação (`git checkout -b feature/fooBar`)
 3. Faça o _commit_ (`git commit -am 'Add some fooBar'`)
 4. _Push_ (`git push origin feature/fooBar`)
