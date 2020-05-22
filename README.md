@@ -50,8 +50,8 @@ npm i
 ## Contatos
 ![alt text](https://lh3.googleusercontent.com/nRuZJWdco2aSsyUVFPIvI4QXVuqkRxwGbCKRJpc-6DNNB2AcHTopNS6V-rDyj3ir9Og7CA=s85)
 
-https://github.com/felipeimp22
-https://www.linkedin.com/in/felipe-imp%C3%A9rio-alves-de-nazareth-823243169/
+GitHub: https://github.com/felipeimp22
+Linkedin: https://www.linkedin.com/in/felipe-imp%C3%A9rio-alves-de-nazareth-823243169/
 
 
 ## Contributing
