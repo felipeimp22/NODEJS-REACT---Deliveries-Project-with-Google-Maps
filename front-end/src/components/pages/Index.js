@@ -34,7 +34,7 @@ import mapStyles from "../../Styles/mapsStyles"
 import pontMarker from '../../Styles/icons/interface.svg'
 import { formatRelative } from 'date-fns';
 
-import * as LCT from "./data/data.json"
+import * as LCT from "./static data/data.json"
 
 
 
@@ -80,9 +80,14 @@ function Search({ panTo }) {
         clearSuggestions()
         try {
           const results = await getGeocode({ address })
+          console.log("------------>1", results)
           const { lat, lng } = await getLatLng(results[0])
-          console.log("-------->", lat, lng)
+          console.log("-------->2", lat, lng)
           panTo({ lat, lng })
+
+
+
+
 
         } catch (error) {
           console.log('ERROR: ', error)
@@ -103,18 +108,37 @@ function Search({ panTo }) {
 
 
 function Index() {
+
+
+
+  const [locale, setLocale] = useState()
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
   const [selectedPoint, setSelectedPoint] = useState(null)
 
 
-  // handleMarker = (curr) => {
-  //   setMarkers([...curr, {
-  //     lat: event.latLng.lat(),
-  //     lng: event.latLng.lng()
 
-  //   }])
-  // }
+
+  // const tt = React. (() => {
+  //   api.get('/index').then(res => {
+
+  //     console.log(res)
+  //     setLocale([res.data])
+  //   })
+  //   console.log("***********************", locale)
+  // }, [])
+
+
+
+  // useEffect(async () => {
+
+  //   return await api.get('/index').then(res => {
+
+  //     // console.log("******************", res)
+  //     setLocale(e => [...e, res.data])
+  //   })
+  // }, [])
+
 
   const handleMarker = React.useCallback((event) => {
     setMarkers(curr => [...curr,
@@ -125,6 +149,7 @@ function Index() {
     }
     ])
     console.log("boa", markers)
+
   }, [])
 
 
@@ -133,27 +158,26 @@ function Index() {
 
     //REQ with PromiseAll
 
-    // const fetchData = () => {
-    //   const result = api.get(
-    //     "/"
-    //   )
-    //   Promise.all([result]).then((values) => {
-    //     setProjects([values[0].data])
-    //     console.log(values[0].data);
-    //   });
-    // };
-    // fetchData();
+    const fetchData = async () => {
+      const result = await api.get(
+        "/index"
+      )
+      Promise.all([result]).then((values) => {
+        setLocale(values[0].data)
+        console.log(values[0].data);
+      });
+    };
+    fetchData();
 
   }, [])
+  console.log("111", locale)
 
-
+  //API_KEY SET Google API_KEY HERE
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "",
     libraries,
   })
-  /**
-   * Verificantions
-   */
+
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
@@ -168,6 +192,11 @@ function Index() {
 
   }, [])
 
+
+
+  /**
+   * Verificantions
+   */
 
   if (loadError) return "Error Loading Maps";
   if (!isLoaded) return "Loading Maps";
@@ -186,6 +215,10 @@ function Index() {
           placeholder="Peso"
         />
 
+
+
+        <button>Cadastrar Cliente</button>
+
       </Div2>
       <div>
 
@@ -197,10 +230,17 @@ function Index() {
           onLoad={onMapLoad}
         >
           {/* PUT Locale */}
-          {LCT.data.map((place) => (
-            <Marker key={place.name} position={{
-              lat: place.geolocalizacao[0], lng: place.geolocalizacao[1]
-            }}
+          {locale.data.map((place) => (
+            <Marker key={place.name}
+              icon={{
+                url: pontMarker,
+                scaledSize: new window.google.maps.Size(40, 40),
+                origin: new window.google.maps.Point(0, 0),
+                anchor: new window.google.maps.Point(15, 15)
+              }}
+              position={{
+                lat: place.geolocalizacao[0], lng: place.geolocalizacao[1]
+              }}
               onClick={() => {
                 setSelectedPoint(place)
               }}
@@ -228,7 +268,7 @@ function Index() {
             position={{ lat: marker.lat, lng: marker.lng }}
             icon={{
               url: pontMarker,
-              scaledSize: new window.google.maps.Size(30, 30),
+              scaledSize: new window.google.maps.Size(20, 20),
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15)
             }}

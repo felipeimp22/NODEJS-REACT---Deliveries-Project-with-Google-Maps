@@ -82,7 +82,7 @@ margin-top:2vh;  */
 }
 
 input{
-  flex-direction:column;
+     flex-direction:column;
 
       flex:1;
       border: 1px solid  rgba(255,255,255,1);
@@ -100,6 +100,28 @@ input{
       margin-top:2vh;
 
     }
+    button{
+      flex-direction:column;
+
+      flex:1;
+      border: 2px solid  rgba(32, 117, 86);
+      padding: 10px 15px;
+      border-radius:4px;
+      font-size: 15px;
+      max-height:1.2vw;
+      max-width:35vh;
+      background-color: rgb(60, 188, 141);
+      min-width:35vh;
+      min-height:6vh;
+      color: rgb(255,255,255);
+      align-items:center;
+
+
+      margin-left:4vh;
+      margin-right:1vh;
+      margin-top:20vh;
+          }
+
 
 `;
 
