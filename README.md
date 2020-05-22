@@ -16,27 +16,27 @@ Todos os cadastros ficam no DashBoard Abaixo do mapa e é possivel apagalos.
 
 ## Instalação
 
-OS X & Linux:
+Windows, OS X & Linux:
 
 ```sh
-npm install my-crazy-module --save
+git clone https://github.com/felipeimp22/NODEJS-REACT---Deliveries-Project-with-Google-Maps.git
 ```
 
-Windows:
 
 ```sh
 edit autoexec.bat
 ```
 
 ## Exemplo de uso
+Nesse Sistema, você pode cadastrar a sua entrega e ao mesmo tempo ir fazendo marcações temporárias que te mostram a hora que foi marcada e ainda acompanha-las pela aba de DashBoard.
 
-Alguns exemplos interessantes e úteis sobre como seu projeto pode ser utilizado. Adicione blocos de códigos e, se necessário, screenshots.
 
-_Para mais exemplos, consulte a [Wiki][wiki]._ 
 
 ## Configuração para Desenvolvimento
 
-Descreva como instalar todas as dependências para desenvolvimento e como rodar um test-suite automatizado de algum tipo. Se necessário, faça isso para múltiplas plataformas.
+Para instalar, é necessario ter um dos gerenciadores de pacotes de preferência Yarn ou npm.
+Assim que já tiver algum desses gerenciadores, é necessario entrar na pasta front-end do projeto e
+digitar no terminal yarn ou npm i, assim que terminar repetir a ação na pasta back-end.
 
 ```sh
 make install
