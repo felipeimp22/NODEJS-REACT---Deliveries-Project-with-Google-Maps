@@ -15,7 +15,7 @@ module.exports = {
     const deliveries = await Deliveries.find({})
 
 
-    return res.json(deliveries)
+    return res.json({ data: deliveries })
   },
 
   async getApiKey(req, res) {

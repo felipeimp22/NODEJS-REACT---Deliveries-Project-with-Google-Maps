@@ -1,13 +1,6 @@
 const mongoose = require('mongoose')
 
-const geo = mongoose.Schema({
-  latitude: {
-    type: String
-  },
-  longitude: {
-    Type: String
-  }
-})
+
 
 const adress = mongoose.Schema({
   logradouro: {
@@ -31,7 +24,7 @@ const adress = mongoose.Schema({
   pais: {
     type: String,
   },
-  geolocalizacao: [geo]
+
 })
 
 const deliveriesSchema = new mongoose.Schema({
@@ -41,6 +34,7 @@ const deliveriesSchema = new mongoose.Schema({
   peso: {
     type: String,
   },
+  geolocalizacao: [],
   endereço: [adress]
 })
 mongoose.model('Deliveries', deliveriesSchema)
