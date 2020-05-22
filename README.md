@@ -47,10 +47,10 @@ npm i
 
 
 
-## Meta
+## Contatos
 
-[https://github.com/username/project](https://github.com/felipeimp22)
-[https://www.linkedin.com/in/felipe-imp%C3%A9rio-alves-de-nazareth-823243169/](https://www.linkedin.com/in/felipe-imp%C3%A9rio-alves-de-nazareth-823243169/)
+(https://github.com/felipeimp22)
+(https://www.linkedin.com/in/felipe-imp%C3%A9rio-alves-de-nazareth-823243169/)
 
 
 ## Contributing
