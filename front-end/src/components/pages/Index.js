@@ -1,5 +1,3 @@
-
-
 import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios'
 import usePlacesAutocomplete, {
@@ -24,7 +22,6 @@ import {
   MenuPopover,
   MenuLink,
 } from "@reach/menu-button";
-// import { GoogleMap, withScriptjs, withGoogleMap } from "react-google-maps";
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 import Axios from 'axios';
 
@@ -34,14 +31,11 @@ import mapStyles from "../../Styles/mapsStyles"
 import pontMarker from '../../Styles/icons/interface.svg'
 import { formatRelative } from 'date-fns';
 
-import * as LCT from "./static data/data.json"
 
 
 
 const libraries = ["places"]
 const mapContainerStyle = {
-  // width: "100vw",
-  // height: "100vh",
   borderRadius: "10px",
   boxShadow: " 0px 0px 2px 2px rgba(0, 0, 0, 0.4)",
 
@@ -76,7 +70,6 @@ function Search({ panTo }) {
     <div className="search">
       <Combobox onSelect={async (address) => {
         //HERE
-        console.log(address)
 
         setValue(address, false)
         clearSuggestions()
@@ -98,7 +91,6 @@ function Search({ panTo }) {
             arrAddress.push(address)
           }
 
-          // console.log("-------->2", lat, lng, infos)
 
 
 
@@ -107,7 +99,6 @@ function Search({ panTo }) {
         } catch (error) {
           console.log('ERROR: ', error)
         }
-        // console.log(adress, data)
       }}>
         <ComboboxInput value={value} onChange={(e) => { setValue(e.target.value) }}
           disabled={!ready} placeholder="Digite o endereço"
@@ -140,10 +131,10 @@ function Index() {
 
 
 
-  const attGeo = React.useCallback(() => {
+  const deleteDashboard = React.useCallback(() => {
 
 
-
+    return api.delete('/delete'), window.location.reload();
 
   }, [])
 
@@ -159,7 +150,6 @@ function Index() {
       time: new Date()
     }
     ])
-    console.log("boa", markers)
 
   }, [])
 
@@ -170,7 +160,10 @@ function Index() {
     let setedAdress = arrAddress[0].split(',')
     let setedAdress2 = setedAdress[setedAdress.length - 2].split('-')
 
-
+    if (isNaN(pesoInfo)) {
+      alert('O peso precisa ser um numero')
+      return
+    }
 
     try {
 
@@ -203,14 +196,8 @@ function Index() {
 
     setGeometry(arrInfos[0], arrInfos[1])
 
-    console.log('wwwwwwww', geometry)
 
-    console.log(setedAdress, setedAdress2)
-    console.log('tttttttttttttt', arrInfos[2][0].types)
-    console.log("00000000000000", arrInfos)
-    console.log(nameInfo, pesoInfo)
 
-    // console.log(lat, lng)
   }, [])
 
   const textListenerName = React.useCallback((e) => {
@@ -226,26 +213,22 @@ function Index() {
 
     //REQ with PromiseAll
 
-    const fetchData = async (Loading = true) => {
+    const fetchData = async () => {
 
       const result = await api.get(
         "/index"
       )
       await Promise.all([result]).then((values) => {
         setLocale(values[0].data)
-        console.log(values[0].data);
       });
-      // Loading = false
 
 
     };
     fetchData();
-    attGeo()
 
 
 
   }, [geometry])
-  console.log("111", locale)
 
   //API_KEY SET Google API_KEY HERE
   const { isLoaded, loadError } = useLoadScript({
@@ -294,7 +277,7 @@ function Index() {
 
         </div>
         <button className="sign" onClick={handleRegister}>Cadastrar Cliente</button>
-        <button className="cancel" onClick={() => { console.log('resetar cadastro') }}>Resetar Cadastro</button>
+        <button className="cancel" onClick={deleteDashboard}>Resetar Cadastro</button>
 
 
       </Div2>
