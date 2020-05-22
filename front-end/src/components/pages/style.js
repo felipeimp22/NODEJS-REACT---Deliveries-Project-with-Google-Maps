@@ -70,7 +70,8 @@ margin-top:-20vh;
 /* border-radius:4px; */
 /* font-size: 15px; */
 max-height:5vw;
-min-width:55vh;
+min-width:35vh;
+
 /* background-color: rgba(255,255,255,0.1); */
 
 /* 
@@ -91,6 +92,7 @@ input{
       max-height:1.2vw;
       max-width:35vh;
       background-color: rgba(255,255,255,0.1);
+      min-width:35vh;
 
 
       margin-left:2vh;

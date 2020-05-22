@@ -1,3 +1,5 @@
+
+
 import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios'
 import usePlacesAutocomplete, {
@@ -13,8 +15,6 @@ import {
   ComboboxOptionText,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-
-
 import {
   Menu,
   MenuList,
@@ -26,19 +26,15 @@ import {
 } from "@reach/menu-button";
 // import { GoogleMap, withScriptjs, withGoogleMap } from "react-google-maps";
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
-
 import Axios from 'axios';
 
 import api from '../../services/api'
-
 import { Div, Form, Div2 } from './style'
-
 import mapStyles from "../../Styles/mapsStyles"
-
 import pontMarker from '../../Styles/icons/interface.svg'
 import { formatRelative } from 'date-fns';
 
-
+import * as LCT from "./data/data.json"
 
 
 
@@ -66,7 +62,7 @@ const options = {
 }
 
 
-function Search() {
+function Search({ panTo }) {
   const { ready, value, suggestions: { status, data }, setValue, clearSuggestions } = usePlacesAutocomplete({
     requestOptions: {
       location: {
@@ -79,10 +75,14 @@ function Search() {
   return (
     <div className="search">
       <Combobox onSelect={async (address) => {
+        //HERE
+        setValue(address, false)
+        clearSuggestions()
         try {
           const results = await getGeocode({ address })
           const { lat, lng } = await getLatLng(results[0])
           console.log("-------->", lat, lng)
+          panTo({ lat, lng })
 
         } catch (error) {
           console.log('ERROR: ', error)
@@ -105,6 +105,7 @@ function Search() {
 function Index() {
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
+  const [selectedPoint, setSelectedPoint] = useState(null)
 
 
   // handleMarker = (curr) => {
@@ -160,6 +161,14 @@ function Index() {
   }, [])
 
 
+  const panTo = React.useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
+    mapRef.current.setZoom(12);
+
+
+  }, [])
+
+
   if (loadError) return "Error Loading Maps";
   if (!isLoaded) return "Loading Maps";
 
@@ -168,7 +177,7 @@ function Index() {
     <Div>
       <Div2>
 
-        <Search />
+        <Search panTo={panTo} />
 
         <input type="text"
           placeholder="Nome"
@@ -187,6 +196,34 @@ function Index() {
           onClick={handleMarker}
           onLoad={onMapLoad}
         >
+          {/* PUT Locale */}
+          {LCT.data.map((place) => (
+            <Marker key={place.name} position={{
+              lat: place.geolocalizacao[0], lng: place.geolocalizacao[1]
+            }}
+              onClick={() => {
+                setSelectedPoint(place)
+              }}
+            />
+          ))}
+
+          {selectedPoint && (
+            <InfoWindow position={{
+              lat: selectedPoint.geolocalizacao[0], lng: selectedPoint.geolocalizacao[1]
+            }}
+              onCloseClick={() => {
+                setSelectedPoint(null)
+              }}
+            >
+              <div>
+                <h2>{selectedPoint.name}</h2>
+                <h4>Peso:   {selectedPoint.peso}KG</h4>
+              </div>
+
+            </InfoWindow>
+          )}
+
+
           {markers.map(marker => <Marker key={marker.time.toISOString()}
             position={{ lat: marker.lat, lng: marker.lng }}
             icon={{
