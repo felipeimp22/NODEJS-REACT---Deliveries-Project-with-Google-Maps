@@ -7,7 +7,7 @@ const adress = mongoose.Schema({
     type: String,
   },
   numero: {
-    type: String,
+    type: Number,
   },
   bairro: {
     type: String,

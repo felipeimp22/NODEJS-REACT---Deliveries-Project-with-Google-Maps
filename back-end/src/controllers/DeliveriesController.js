@@ -21,6 +21,14 @@ module.exports = {
   async getApiKey(req, res) {
 
     return res.json(process.env.API_KEY)
+  },
+
+  async delete(req, res) {
+
+    await Deliveries.remove({})
+
+    return res.json("Deleted")
   }
+
 
 }
