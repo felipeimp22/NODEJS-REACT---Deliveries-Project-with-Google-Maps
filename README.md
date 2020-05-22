@@ -6,7 +6,11 @@
 [![Build Status][travis-image]][travis-url]
 [![Downloads Stats][npm-downloads]][npm-url]
 
-De um a dois parágrafos sobre o que é seu projeto e o que ele faz.
+Desafio de cadastro de deliveries usando google maps,
+cadastra Deliveries e os mesmos são setados no mapa e ainda é possivel 
+fazer marcações temporarias clicando no local que deseja no mapa.
+
+Todos os cadastros ficam no DashBoard Abaixo do mapa e é possivel apagalos.
 
 ![alt text](https://marquesfernandes.com/wp-content/uploads/2020/01/1555172.jpg)
 
