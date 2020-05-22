@@ -11,7 +11,6 @@ module.exports = {
   },
 
   async index(req, res) {
-    // const deliveries = await Deliveries.find({}).select('peso')
     const deliveries = await Deliveries.find({})
 
 
