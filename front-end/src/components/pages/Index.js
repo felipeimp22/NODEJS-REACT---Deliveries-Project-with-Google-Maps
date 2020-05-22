@@ -29,7 +29,7 @@ import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps
 import Axios from 'axios';
 
 import api from '../../services/api'
-import { Div, Form, Div2 } from './style'
+import { Div, Form, Div2, Div3 } from './style'
 import mapStyles from "../../Styles/mapsStyles"
 import pontMarker from '../../Styles/icons/interface.svg'
 import { formatRelative } from 'date-fns';
@@ -43,11 +43,11 @@ const mapContainerStyle = {
   // width: "100vw",
   // height: "100vh",
   borderRadius: "10px",
-  boxShadow: " 0px 0px 2px 2px rgba(0, 0, 0, 0.5)",
+  boxShadow: " 0px 0px 2px 2px rgba(0, 0, 0, 0.4)",
 
 
   width: "60vw",
-  height: "80vh",
+  height: "60vh",
 
 }
 
@@ -76,14 +76,29 @@ function Search({ panTo }) {
     <div className="search">
       <Combobox onSelect={async (address) => {
         //HERE
+        console.log(address)
+
         setValue(address, false)
         clearSuggestions()
         try {
           const results = await getGeocode({ address })
-          console.log("------------>1", results)
           const { lat, lng } = await getLatLng(results[0])
-          console.log("-------->2", lat, lng)
-          panTo({ lat, lng })
+          const infos = results[0].address_components
+          panTo({ lat, lng, infos })
+          if (arrInfos.length <= 0) {
+            arrInfos.push(lat, lng, infos)
+          } else {
+            arrInfos.splice(0)
+            arrInfos.push(lat, lng, infos)
+          }
+          if (arrAddress.length <= 0) {
+            arrAddress.push(address)
+          } else {
+            arrAddress.splice(0)
+            arrAddress.push(address)
+          }
+
+          // console.log("-------->2", lat, lng, infos)
 
 
 
@@ -105,6 +120,10 @@ function Search({ panTo }) {
   )
 }
 
+let arrInfos = []
+let nameInfo = ''
+let pesoInfo = ''
+let arrAddress = []
 
 
 function Index() {
@@ -115,29 +134,21 @@ function Index() {
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
   const [selectedPoint, setSelectedPoint] = useState(null)
+  const [geometry, setGeometry] = useState()
 
 
 
 
-  // const tt = React. (() => {
-  //   api.get('/index').then(res => {
 
-  //     console.log(res)
-  //     setLocale([res.data])
-  //   })
-  //   console.log("***********************", locale)
-  // }, [])
+  const attGeo = React.useCallback(() => {
 
 
 
-  // useEffect(async () => {
 
-  //   return await api.get('/index').then(res => {
+  }, [])
 
-  //     // console.log("******************", res)
-  //     setLocale(e => [...e, res.data])
-  //   })
-  // }, [])
+
+
 
 
   const handleMarker = React.useCallback((event) => {
@@ -153,28 +164,92 @@ function Index() {
   }, [])
 
 
-  // 
+
+
+  const handleRegister = React.useCallback(() => {
+    let setedAdress = arrAddress[0].split(',')
+    let setedAdress2 = setedAdress[setedAdress.length - 2].split('-')
+
+
+
+    try {
+
+
+      api.post('/createDeliveries', {
+        "name": nameInfo,
+        "peso": pesoInfo,
+        "geolocalizacao": [
+          arrInfos[0],
+
+          arrInfos[1]
+
+        ],
+        "endereço": [{
+          "logradouro": arrAddress[0],
+          // "numero": arrInfos[2][0].types === "street_number" ? arrInfos[2[0]].types[0] : "não possue",
+          "bairro": setedAdress[0],
+          "complemento": arrAddress[0],
+          "cidade": setedAdress2.length === 2 ? setedAdress2[0] : setedAdress[0],
+          "estado": setedAdress2[setedAdress2.length - 1],
+          "pais": setedAdress[setedAdress.length - 1],
+
+        }]
+
+      })
+    } catch (error) {
+      console.log('ERROR: ', error)
+    }
+
+
+    setGeometry(arrInfos[0], arrInfos[1])
+
+    console.log('wwwwwwww', geometry)
+
+    console.log(setedAdress, setedAdress2)
+    console.log('tttttttttttttt', arrInfos[2][0].types)
+    console.log("00000000000000", arrInfos)
+    console.log(nameInfo, pesoInfo)
+
+    // console.log(lat, lng)
+  }, [])
+
+  const textListenerName = React.useCallback((e) => {
+    nameInfo = e.target.value
+
+  }, [])
+  const textListenerPeso = React.useCallback((e) => {
+    pesoInfo = e.target.value
+
+  }, [])
+
   useEffect(() => {
 
     //REQ with PromiseAll
 
-    const fetchData = async () => {
+    const fetchData = async (Loading = true) => {
+
       const result = await api.get(
         "/index"
       )
-      Promise.all([result]).then((values) => {
+      await Promise.all([result]).then((values) => {
         setLocale(values[0].data)
         console.log(values[0].data);
       });
+      // Loading = false
+
+
     };
     fetchData();
+    attGeo()
 
-  }, [])
+
+
+  }, [geometry])
   console.log("111", locale)
 
   //API_KEY SET Google API_KEY HERE
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "",
+    googleMapsApiKey: "AIzaSyCiCXf5Z23Iz7TDHjE5Kn9MtYGETyS4DdU",
     libraries,
   })
 
@@ -185,42 +260,45 @@ function Index() {
   }, [])
 
 
-  const panTo = React.useCallback(({ lat, lng }) => {
+
+  const panTo = React.useCallback(({ lat, lng, infos }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(12);
 
-
   }, [])
-
-
 
   /**
    * Verificantions
    */
-
   if (loadError) return "Error Loading Maps";
   if (!isLoaded) return "Loading Maps";
+  if (locale == undefined) return !isLoaded
 
 
   return (
     <Div>
       <Div2>
+        <div className="search">
+          <Search panTo={panTo} />
+        </div>
 
-        <Search panTo={panTo} />
-
-        <input type="text"
+        <input onChange={textListenerName} type="text"
           placeholder="Nome"
         />
-        <input type="text"
+        <input onChange={textListenerPeso} type="text"
           placeholder="Peso"
         />
+        <div className="geometry">
+          <input placeholder="latitude" value={geometry} disabled={true} ></input>
+          <input placeholder="altitude" value={arrInfos[1]} disabled={true} ></input>
 
+        </div>
+        <button className="sign" onClick={handleRegister}>Cadastrar Cliente</button>
+        <button className="cancel" onClick={() => { console.log('resetar cadastro') }}>Resetar Cadastro</button>
 
-
-        <button>Cadastrar Cliente</button>
 
       </Div2>
-      <div>
+      <div className="map">
 
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
@@ -257,7 +335,9 @@ function Index() {
             >
               <div>
                 <h2>{selectedPoint.name}</h2>
-                <h4>Peso:   {selectedPoint.peso}KG</h4>
+                <h4>Peso: {selectedPoint.peso}KG</h4>
+
+
               </div>
 
             </InfoWindow>
@@ -279,13 +359,28 @@ function Index() {
           {selected ? (
             <InfoWindow position={{ lat: selected.lat, lng: selected.lng }} onCloseClick={() => { setSelected(null) }}>
               <div>
-                <h2>Point Spoted</h2>
+                <h2>Point Marked</h2>
                 <p>Spoted {formatRelative(selected.time, new Date())}</p>
               </div>
             </InfoWindow>) : null}
 
 
         </GoogleMap>
+        <Div3>
+          <div className='titleTable'><h3>Nome</h3>
+            <h3>Cidade</h3><h3>país</h3><h3>peso</h3>
+            <h3>LAT</h3><h3>LNG</h3></div>
+          <div className="container">
+            <div >
+              {locale.data.map((e, i) => (
+                <div className='contentTable'><h4>{e.name}</h4> <h4>{e.endereço[0].cidade}</h4> <h4>{e.endereço[0].pais}</h4> <h4>{e.peso}</h4>
+                  <h4>{e.geolocalizacao[0]}</h4> <h4>{e.geolocalizacao[1]}</h4> </div>
+
+              ))}
+            </div>
+          </div>
+
+        </Div3>
       </div>
     </Div >
 
