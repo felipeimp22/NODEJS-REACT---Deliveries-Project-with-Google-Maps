@@ -7,7 +7,7 @@ module.exports = {
 
   async strore(req, res) {
     const deliveries = await Deliveries.create(req.body)
-    return res.json(deliveries)
+    return res.json(deliveries), console.log(req.body)
   },
 
   async index(req, res) {
