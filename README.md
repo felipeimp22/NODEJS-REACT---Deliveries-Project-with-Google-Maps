@@ -2,13 +2,13 @@
 
 > Descrição curta sobre o que seu projeto faz.
 
-[![NPM Version][npm-image]][https://marquesfernandes.com/wp-content/uploads/2020/01/1555172.jpg]
+[![NPM Version][npm-image]
 [![Build Status][travis-image]][travis-url]
 [![Downloads Stats][npm-downloads]][npm-url]
 
 De um a dois parágrafos sobre o que é seu projeto e o que ele faz.
 
-![](../header.png)
+![alt text](https://marquesfernandes.com/wp-content/uploads/2020/01/1555172.jpg)
 
 ## Instalação
 
