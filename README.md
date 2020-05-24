@@ -1,16 +1,16 @@
 # NODEJS-REACT---Deliveries-Project-with-Google-Maps
 
 > Descrição curta sobre o que seu projeto faz.
-
-[![NPM Version][npm-image]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
-
-Desafio de cadastro de deliveries usando google maps,
+> Desafio de cadastro de deliveries usando google maps,
 cadastra Deliveries e os mesmos são setados no mapa e ainda é possivel 
 fazer marcações temporarias clicando no local que deseja no mapa.
 
 Todos os cadastros ficam no DashBoard Abaixo do mapa e é possivel apagalos.
+[![NPM Version][npm-image]
+[![Build Status][travis-image]][travis-url]
+[![Downloads Stats][npm-downloads]][npm-url]
+
+
 
 ![alt text](https://marquesfernandes.com/wp-content/uploads/2020/01/1555172.jpg)
 
