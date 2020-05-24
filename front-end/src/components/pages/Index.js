@@ -179,7 +179,7 @@ function Index() {
         ],
         "endereço": [{
           "logradouro": arrAddress[0],
-          // "numero": arrInfos[2][0].types === "street_number" ? arrInfos[2[0]].types[0] : "não possue",
+          // "numero": arrInfos[2][0].types === "street_number" ? arrInfos[2][0].types[0] : "não possue",
           "bairro": setedAdress[0],
           "complemento": arrAddress[0],
           "cidade": setedAdress2.length === 2 ? setedAdress2[0] : setedAdress[0],
@@ -215,20 +215,19 @@ function Index() {
 
     const fetchData = async () => {
 
-      const result = await api.get(
+      const result = api.get(
         "/index"
       )
-      await Promise.all([result]).then((values) => {
-        setLocale(values[0].data)
+      Promise.all([result]).then((values) => {
+        if (values[0].data.length > 0) {
+          alert('ok')
+        }
+        setLocale(values[0].data.data)
       });
-
 
     };
     fetchData();
-
-
-
-  }, [geometry])
+  }, [locale])
 
   //API_KEY SET Google API_KEY HERE
   const { isLoaded, loadError } = useLoadScript({
@@ -272,7 +271,7 @@ function Index() {
           placeholder="Peso"
         />
         <div className="geometry">
-          <input placeholder="latitude" value={geometry} disabled={true} ></input>
+          <input placeholder="latitude" value={arrInfos[1]} disabled={true} ></input>
           <input placeholder="altitude" value={arrInfos[1]} disabled={true} ></input>
 
         </div>
@@ -291,8 +290,8 @@ function Index() {
           onLoad={onMapLoad}
         >
           {/* PUT Locale */}
-          {locale.data.map((place) => (
-            <Marker key={place.name}
+          {locale.map((place, i) => (
+            <Marker key={i}
               icon={{
                 url: pontMarker,
                 scaledSize: new window.google.maps.Size(40, 40),
@@ -355,8 +354,8 @@ function Index() {
             <h3>LAT</h3><h3>LNG</h3></div>
           <div className="container">
             <div >
-              {locale.data.map((e, i) => (
-                <div className='contentTable'><h4>{e.name}</h4> <h4>{e.endereço[0].cidade}</h4> <h4>{e.endereço[0].pais}</h4> <h4>{e.peso}</h4>
+              {locale.map((e, i) => (
+                <div key={i} className='contentTable'><h4>{e.name}</h4> <h4>{e.endereço[0].cidade}</h4> <h4>{e.endereço[0].pais}</h4> <h4>{e.peso}</h4>
                   <h4>{e.geolocalizacao[0]}</h4> <h4>{e.geolocalizacao[1]}</h4> </div>
 
               ))}
