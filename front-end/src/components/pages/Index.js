@@ -121,7 +121,7 @@ function Index() {
 
 
 
-  const [locale, setLocale] = useState()
+  const [locale, setLocale] = useState([])
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
   const [selectedPoint, setSelectedPoint] = useState(null)
@@ -157,6 +157,18 @@ function Index() {
 
 
   const handleRegister = React.useCallback(() => {
+    const result = api.get(
+      "/index"
+    )
+    Promise.all([result]).then((values) => {
+      setLocale(values[0].data.data)
+    });
+
+
+
+
+
+
     let setedAdress = arrAddress[0].split(',')
     let setedAdress2 = setedAdress[setedAdress.length - 2].split('-')
 
@@ -193,8 +205,24 @@ function Index() {
       console.log('ERROR: ', error)
     }
 
+    const fetchData = async () => {
+
+      const result = api.get(
+        "/index"
+      )
+      await Promise.all([result]).then((values) => {
+        setLocale(values[0].data.data)
+      });
+
+    };
+    fetchData()
+
+
+
 
     setGeometry(arrInfos[0], arrInfos[1])
+
+
 
 
 
@@ -209,25 +237,24 @@ function Index() {
 
   }, [])
 
+
+
+
+
   useEffect(() => {
-
     //REQ with PromiseAll
-
     const fetchData = async () => {
 
       const result = api.get(
         "/index"
       )
-      Promise.all([result]).then((values) => {
-        if (values[0].data.length > 0) {
-          alert('ok')
-        }
+      await Promise.all([result]).then((values) => {
         setLocale(values[0].data.data)
       });
 
     };
     fetchData();
-  }, [locale])
+  }, [])
 
   //API_KEY SET Google API_KEY HERE
   const { isLoaded, loadError } = useLoadScript({
