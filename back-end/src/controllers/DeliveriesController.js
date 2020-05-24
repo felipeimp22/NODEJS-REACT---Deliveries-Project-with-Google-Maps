@@ -6,6 +6,13 @@ require('dotenv').config()
 module.exports = {
 
   async strore(req, res) {
+    const { name, peso } = req.body
+    if (name.length <= 0) {
+      return res.json('informe o nome')
+    }
+    if (peso.length <= 0) {
+      return res.json('informe o nome')
+    }
     const deliveries = await Deliveries.create(req.body)
     return res.json(deliveries), console.log(req.body)
   },
