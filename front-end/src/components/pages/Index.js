@@ -156,7 +156,7 @@ function Index() {
 
 
 
-  const handleRegister = React.useCallback(() => {
+  async function handleRegister() {
     const result = api.get(
       "/index"
     )
@@ -177,56 +177,44 @@ function Index() {
       return
     }
 
-    try {
-
-
-      api.post('/createDeliveries', {
-        "name": nameInfo,
-        "peso": pesoInfo,
-        "geolocalizacao": [
-          arrInfos[0],
-
-          arrInfos[1]
-
-        ],
-        "endereço": [{
-          "logradouro": arrAddress[0],
-          // "numero": arrInfos[2][0].types === "street_number" ? arrInfos[2][0].types[0] : "não possue",
-          "bairro": setedAdress[0],
-          "complemento": arrAddress[0],
-          "cidade": setedAdress2.length === 2 ? setedAdress2[0] : setedAdress[0],
-          "estado": setedAdress2[setedAdress2.length - 1],
-          "pais": setedAdress[setedAdress.length - 1],
-
-        }]
-
-      })
-    } catch (error) {
-      console.log('ERROR: ', error)
-    }
-
-    const fetchData = async () => {
-
-      const result = api.get(
-        "/index"
-      )
-      await Promise.all([result]).then((values) => {
-        setLocale(values[0].data.data)
-      });
-
-    };
-    fetchData()
 
 
 
+    const response = await api.post('/createDeliveries', {
+      "name": nameInfo,
+      "peso": pesoInfo,
+      "geolocalizacao": [
+        arrInfos[0],
 
+        arrInfos[1]
+
+      ],
+      "endereço": [{
+        "logradouro": arrAddress[0],
+        // "numero": arrInfos[2][0].types === "street_number" ? arrInfos[2][0].types[0] : "não possue",
+        "bairro": setedAdress[0],
+        "complemento": arrAddress[0],
+        "cidade": setedAdress2.length === 2 ? setedAdress2[0] : setedAdress[0],
+        "estado": setedAdress2[setedAdress2.length - 1],
+        "pais": setedAdress[setedAdress.length - 1],
+
+      }]
+
+    })
+
+
+    const project = response.data
+
+    setLocale([...locale, project])
+
+    console.log(locale)
     setGeometry(arrInfos[0], arrInfos[1])
 
 
 
 
 
-  }, [])
+  }
 
   const textListenerName = React.useCallback((e) => {
     nameInfo = e.target.value
