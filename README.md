@@ -23,7 +23,7 @@ git clone https://github.com/felipeimp22/NODEJS-REACT---Deliveries-Project-with-
 
 
 ```sh
-edit autoexec.bat
+
 ```
 
 ## Exemplo de uso
