@@ -178,7 +178,8 @@ function Index() {
     }
 
 
-
+    else if (pesoInfo.length <= 0) return alert('Você precisa informar o peso');
+    else if (nameInfo.length <= 0) return alert('Você precisa informar o nome');
 
     const response = await api.post('/createDeliveries', {
       "name": nameInfo,
